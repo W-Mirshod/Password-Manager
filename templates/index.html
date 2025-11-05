@@ -30,14 +30,117 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Password Manager</h1>
-            <p class="subtitle">Welcome to Password Manager</p>
+        <header role="banner">
+            <h1>🔐 Password Manager</h1>
+            <p class="subtitle">Securely manage your passwords</p>
         </header>
-        <main>
-            <p>This is the Password Manager application.</p>
+        
+        <nav class="toolbar" role="toolbar" aria-label="Password management toolbar">
+            <div class="search-container">
+                <label for="searchInput" class="sr-only">Search passwords</label>
+                <input type="text" id="searchInput" placeholder="Search passwords..." class="search-input" aria-label="Search passwords">
+            </div>
+            <button id="addBtn" class="btn btn-primary" aria-label="Add new password">+ Add Password</button>
+        </nav>
+        
+        <main role="main">
+            <div id="passwordList" class="password-list" role="list" aria-label="Password entries">
+                <div class="loading" role="status" aria-live="polite">Loading passwords...</div>
+            </div>
         </main>
     </div>
+    
+    <!-- Modal for Add/Edit Password -->
+    <div id="passwordModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Password</h2>
+                <button class="close-btn" id="closeModal" aria-label="Close modal">&times;</button>
+            </div>
+            <form id="passwordForm" aria-label="Password entry form">
+                <input type="hidden" id="entryId">
+                
+                <div class="form-group">
+                    <label for="title">Title *</label>
+                    <input type="text" id="title" required placeholder="e.g., Gmail Account">
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Username/Email</label>
+                    <input type="text" id="username" placeholder="username@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <div class="password-input-group">
+                        <input type="password" id="password" required placeholder="Enter password">
+                        <button type="button" id="togglePassword" class="btn-icon" title="Show/Hide password">👁️</button>
+                        <button type="button" id="generatePassword" class="btn-icon" title="Generate password">🎲</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="url">URL/Website</label>
+                    <input type="url" id="url" placeholder="https://example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" rows="3" placeholder="Additional notes..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Password Generator Modal -->
+    <div id="generatorModal" class="modal" role="dialog" aria-labelledby="generatorModalTitle" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="generatorModalTitle">Generate Password</h2>
+                <button class="close-btn" id="closeGeneratorModal" aria-label="Close password generator">&times;</button>
+            </div>
+            <div class="generator-content">
+                <div class="form-group">
+                    <label for="genLength">Length: <span id="lengthValue">16</span></label>
+                    <input type="range" id="genLength" min="8" max="64" value="16">
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="genUppercase" checked> Include Uppercase
+                    </label>
+                    <label>
+                        <input type="checkbox" id="genLowercase" checked> Include Lowercase
+                    </label>
+                    <label>
+                        <input type="checkbox" id="genNumbers" checked> Include Numbers
+                    </label>
+                    <label>
+                        <input type="checkbox" id="genSymbols" checked> Include Symbols
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="generatedPassword">Generated Password</label>
+                    <div class="password-input-group">
+                        <input type="text" id="generatedPassword" readonly>
+                        <button type="button" id="copyGenerated" class="btn-icon" title="Copy password">📋</button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="regenerateBtn" class="btn btn-secondary">Regenerate</button>
+                    <button type="button" id="useGeneratedBtn" class="btn btn-primary">Use This Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script src="/static/js/app.js"></script>
 </body>
 </html>
