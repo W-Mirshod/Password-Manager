@@ -2,7 +2,7 @@ services:
   web:
     build: .
     ports:
-      - "801113:8000"
+      - "8000"
     volumes:
       - ./app:/app/app:Z
       - ./static:/app/static:Z
